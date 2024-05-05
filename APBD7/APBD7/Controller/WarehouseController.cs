@@ -17,8 +17,33 @@ public class WarehouseController : ControllerBase
     [HttpPost]
     public IActionResult CreateOrder([FromBody] OrderRequest orderRequest)
     {
-            int productWarehouseId = _warehouseService.AddProduct(orderRequest);
-            return Ok(productWarehouseId);
-        
+        int productWarehouseId = 0;
+        try
+        {
+            productWarehouseId = _warehouseService.AddProduct(orderRequest);
+        }
+        catch (Exception e)
+        {
+            return BadRequest();
+        }
+            
+            
+        return Ok(productWarehouseId);
+    }
+
+    [HttpPost("callprocedure")]
+    public IActionResult CallProcedure(OrderRequest orderRequest)
+    {
+        int id = 0;
+        try
+        {
+            id = _warehouseService.AddProductUsingProcedure(orderRequest);
+        }
+        catch (Exception e)
+        {
+            return BadRequest();
+        }
+
+        return Ok(id);
     }
 }

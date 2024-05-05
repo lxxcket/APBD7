@@ -1,3 +1,4 @@
+using System.Data;
 using System.Data.SqlClient;
 
 namespace APBD7.Repository;
@@ -84,6 +85,25 @@ public class WarehouseRepository : IWarehouseRepository
             }
         }
     }
+
+    public int AddProductProcedure(OrderRequest orderRequest)
+    {
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+            using (SqlCommand command = new SqlCommand("AddProductToWarehouse", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@IdProduct", orderRequest.IdProduct);
+                command.Parameters.AddWithValue("@IdWarehouse", orderRequest.IdWarehouse);
+                command.Parameters.AddWithValue("@Amount", orderRequest.Amount);
+                command.Parameters.AddWithValue("@CreatedAt", orderRequest.CreatedAt);
+                
+                return Convert.ToInt32(command.ExecuteScalar());
+            }
+        }
+    }
+
     private void UpdatePurchaseOrder(int productId)
     {
         string query = "UPDATE [Order] SET FulfilledAt = GETDATE() WHERE IdProduct = @ProductId";

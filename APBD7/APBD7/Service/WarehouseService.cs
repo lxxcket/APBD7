@@ -26,6 +26,9 @@ public class WarehouseService : IWarehouseService
         
         return _repository.AddProductToWarehouse(orderRequest);
     }
-    
-    
+
+    public int AddProductUsingProcedure(OrderRequest orderRequest)
+    {
+        return _repository.AddProductProcedure(orderRequest);
+    }
 }

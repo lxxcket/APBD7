@@ -7,4 +7,6 @@ public interface IWarehouseRepository
     int WarehouseExists(int id);
     int PurchaseOrderExists(int productId, int amount, DateTime createdAt);
     int OrderFulfilled(int idProduct);
+
+    int AddProductProcedure(OrderRequest orderRequest);
 }
