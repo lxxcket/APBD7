@@ -2,6 +2,6 @@ namespace APBD7.Service;
 
 public interface IWarehouseService
 {
-    int AddProduct(OrderRequest orderRequest);
-    int AddProductUsingProcedure(OrderRequest orderRequest);
+    Task<int> AddProduct(OrderRequest orderRequest);
+    Task<int> AddProductUsingProcedure(OrderRequest orderRequest);
 }

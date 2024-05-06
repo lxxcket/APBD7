@@ -2,11 +2,11 @@ namespace APBD7.Repository;
 
 public interface IWarehouseRepository
 {
-    int AddProductToWarehouse(OrderRequest orderRequest);
-    int ProductExists(int id);
-    int WarehouseExists(int id);
-    int PurchaseOrderExists(int productId, int amount, DateTime createdAt);
-    int OrderFulfilled(int idProduct);
+    Task<int> AddProductToWarehouseAsync(OrderRequest orderRequest);
+    Task<int> ProductExistsAsync(int id);
+    Task<int> WarehouseExistsAsync(int id);
+    Task<int> PurchaseOrderExistsAsync(int productId, int amount, DateTime createdAt);
+    Task<int> OrderFulfilledAsync(int idProduct);
 
-    int AddProductProcedure(OrderRequest orderRequest);
+    Task<int> AddProductProcedureAsync(OrderRequest orderRequest);
 }

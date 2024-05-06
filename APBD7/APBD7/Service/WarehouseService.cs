@@ -11,24 +11,24 @@ public class WarehouseService : IWarehouseService
         _repository = repository;
     }
 
-    public int AddProduct(OrderRequest orderRequest)
+    public async Task<int> AddProduct(OrderRequest orderRequest)
     {
 
-        if (_repository.ProductExists(orderRequest.IdProduct) <= 0 ||
-            _repository.WarehouseExists(orderRequest.IdWarehouse) <= 0 || orderRequest.Amount <= 0)
+        if (await _repository.ProductExistsAsync(orderRequest.IdProduct) <= 0 ||
+            await _repository.WarehouseExistsAsync(orderRequest.IdWarehouse) <= 0 || orderRequest.Amount <= 0)
             throw new Exception("Invalid product, warehouse or amount");
 
-        int idOrder = _repository.PurchaseOrderExists(orderRequest.IdProduct, orderRequest.Amount, DateTime.Now);
+        int idOrder = await _repository.PurchaseOrderExistsAsync(orderRequest.IdProduct, orderRequest.Amount, DateTime.Now);
 
-        if (_repository.OrderFulfilled(idOrder) >= 1)
+        if (await _repository.OrderFulfilledAsync(idOrder) >= 1)
             throw new Exception("Order was already fulfilled");
         
         
-        return _repository.AddProductToWarehouse(orderRequest);
+        return await _repository.AddProductToWarehouseAsync(orderRequest);
     }
 
-    public int AddProductUsingProcedure(OrderRequest orderRequest)
+    public async Task<int> AddProductUsingProcedure(OrderRequest orderRequest)
     {
-        return _repository.AddProductProcedure(orderRequest);
+        return await _repository.AddProductProcedureAsync(orderRequest);
     }
 }

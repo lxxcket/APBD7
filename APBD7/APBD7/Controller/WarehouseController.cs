@@ -15,12 +15,12 @@ public class WarehouseController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult CreateOrder([FromBody] OrderRequest orderRequest)
+    public async Task<IActionResult> CreateOrder([FromBody] OrderRequest orderRequest)
     {
         int productWarehouseId = 0;
         try
         {
-            productWarehouseId = _warehouseService.AddProduct(orderRequest);
+            productWarehouseId = await _warehouseService.AddProduct(orderRequest);
         }
         catch (Exception e)
         {
@@ -32,12 +32,12 @@ public class WarehouseController : ControllerBase
     }
 
     [HttpPost("callprocedure")]
-    public IActionResult CallProcedure(OrderRequest orderRequest)
+    public async Task<IActionResult> CallProcedure(OrderRequest orderRequest)
     {
         int id = 0;
         try
         {
-            id = _warehouseService.AddProductUsingProcedure(orderRequest);
+            id = await _warehouseService.AddProductUsingProcedure(orderRequest);
         }
         catch (Exception e)
         {
